@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://br8poldx02i6k"]
+
+[ext_resource type="Script" path="res://Scripts/pipe_spawner.gd" id="1_guifi"]
+
+[node name="PipeSpawner" type="Node"]
+script = ExtResource("1_guifi")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="Spawner" type="Node" parent="."]
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

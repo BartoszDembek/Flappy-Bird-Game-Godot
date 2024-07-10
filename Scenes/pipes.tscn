@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqujnd77ak04o"]
+
+[ext_resource type="Script" path="res://Scripts/pipes.gd" id="1_0ny8l"]
+[ext_resource type="Texture2D" uid="uid://drx10uoxjpba5" path="res://Assets/pipe-green.png" id="1_ofew3"]
+[ext_resource type="AudioStream" uid="uid://bwudqam0xw0rs" path="res://Assets/scoresound.mp3" id="3_7npp8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nspi1"]
+size = Vector2(52, 480)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vdwyo"]
+size = Vector2(52, 480)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jr34"]
+size = Vector2(41, 116)
+
+[node name="Pipes" type="Node2D"]
+script = ExtResource("1_0ny8l")
+
+[node name="TopPipe" type="Area2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="TopPipe"]
+position = Vector2(0, -300)
+rotation = -3.14159
+texture = ExtResource("1_ofew3")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopPipe"]
+position = Vector2(0, -300)
+shape = SubResource("RectangleShape2D_nspi1")
+
+[node name="BottomPipe" type="Area2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="BottomPipe"]
+position = Vector2(0, 300)
+texture = ExtResource("1_ofew3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomPipe"]
+position = Vector2(0, 300)
+shape = SubResource("RectangleShape2D_vdwyo")
+
+[node name="ScoreArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreArea"]
+position = Vector2(3.5, 0)
+shape = SubResource("RectangleShape2D_1jr34")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="ScoreSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_7npp8")
+
+[node name="DestroyTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="body_entered" from="TopPipe" to="." method="_on_bird_entered"]
+[connection signal="body_entered" from="BottomPipe" to="." method="_on_bird_entered"]
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_score_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="DestroyTimer" to="." method="_on_destroy_timer_timeout"]

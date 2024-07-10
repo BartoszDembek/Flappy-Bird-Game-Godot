@@ -1,0 +1,35 @@
+[gd_scene load_steps=9 format=3 uid="uid://bk3yu5a07fx18"]
+
+[ext_resource type="PackedScene" uid="uid://cl1vd2da6v2tu" path="res://Scenes/bird.tscn" id="1_1xpku"]
+[ext_resource type="Texture2D" uid="uid://bwf5i0qyei8n0" path="res://Assets/background-day.png" id="1_6lsje"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_h41k2"]
+[ext_resource type="PackedScene" uid="uid://b4o1b8wa7txj0" path="res://Scenes/ground.tscn" id="3_4cyhd"]
+[ext_resource type="PackedScene" uid="uid://br8poldx02i6k" path="res://Scenes/pipe_spawner.tscn" id="5_o37p8"]
+[ext_resource type="PackedScene" uid="uid://c8ha6p88ndyd1" path="res://Scenes/fade_scene.tscn" id="6_r0v34"]
+[ext_resource type="PackedScene" uid="uid://d3spkrjldf78p" path="res://Scenes/game_ui.tscn" id="7_gixjq"]
+[ext_resource type="AudioStream" uid="uid://c36w7u58ls8ft" path="res://Assets/hitsound.mp3" id="8_hfuwf"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_h41k2")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_6lsje")
+
+[node name="PipeSpawner" parent="." instance=ExtResource("5_o37p8")]
+
+[node name="Bird" parent="." instance=ExtResource("1_1xpku")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Ground" parent="." instance=ExtResource("3_4cyhd")]
+position = Vector2(-174, 156)
+
+[node name="FadeScene" parent="." instance=ExtResource("6_r0v34")]
+
+[node name="GameUi" parent="." instance=ExtResource("7_gixjq")]
+layer = 6
+
+[node name="HitSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_hfuwf")
+
+[connection signal="body_entered" from="Ground" to="." method="_on_ground_body_entered"]
