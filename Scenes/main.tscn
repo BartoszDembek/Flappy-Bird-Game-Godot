@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bk3yu5a07fx18"]
+[gd_scene load_steps=10 format=3 uid="uid://bk3yu5a07fx18"]
 
 [ext_resource type="PackedScene" uid="uid://cl1vd2da6v2tu" path="res://Scenes/bird.tscn" id="1_1xpku"]
 [ext_resource type="Texture2D" uid="uid://bwf5i0qyei8n0" path="res://Assets/background-day.png" id="1_6lsje"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://c8ha6p88ndyd1" path="res://Scenes/fade_scene.tscn" id="6_r0v34"]
 [ext_resource type="PackedScene" uid="uid://d3spkrjldf78p" path="res://Scenes/game_ui.tscn" id="7_gixjq"]
 [ext_resource type="AudioStream" uid="uid://c36w7u58ls8ft" path="res://Assets/hitsound.mp3" id="8_hfuwf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f6v6f"]
+size = Vector2(288, 43)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_h41k2")
@@ -32,4 +35,11 @@ layer = 6
 [node name="HitSoundPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_hfuwf")
 
+[node name="TopWall" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
+position = Vector2(0, -279.5)
+shape = SubResource("RectangleShape2D_f6v6f")
+
 [connection signal="body_entered" from="Ground" to="." method="_on_ground_body_entered"]
+[connection signal="body_entered" from="TopWall" to="." method="_on_ground_body_entered"]
